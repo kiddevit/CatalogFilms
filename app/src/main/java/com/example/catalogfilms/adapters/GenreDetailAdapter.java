@@ -1,6 +1,7 @@
 package com.example.catalogfilms.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.catalogfilms.R;
 import com.example.catalogfilms.models.DetailGenre;
+import com.example.catalogfilms.services.GenreDetailSingletonService;
 
 import java.util.List;
 
 public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<DetailGenre> detailGenreList;
+    private GenreDetailSingletonService genreDetailService;
 
     public GenreDetailAdapter(Context context, List<DetailGenre> detailGenreList) {
         this.detailGenreList = detailGenreList;
         this.inflater = LayoutInflater.from(context);
+        this.genreDetailService = GenreDetailSingletonService.getInstance();
     }
 
     @Override
@@ -32,8 +36,21 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
     public void onBindViewHolder(GenreDetailAdapter.ViewHolder holder, int position) {
         DetailGenre detailGenre = detailGenreList.get(position);
         holder.ratingView.setText(detailGenre.getRating().toString());
+        holder.ratingView.setTextColor(mapColorByRating(detailGenre.getRating()));
         holder.titleView.setText(detailGenre.getTitle());
         holder.descriptionView.setText(detailGenre.getDescription());
+    }
+
+    private int mapColorByRating(double rating) {
+        if (rating > 8) {
+            return Color.parseColor("#BF8230");
+        }
+
+        if (rating > 7) {
+            return Color.parseColor("#FFC600");
+        }
+
+        return Color.parseColor("#FF1300");
     }
 
     @Override
@@ -49,6 +66,16 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
             ratingView = (TextView) view.findViewById(R.id.rating);
             titleView = (TextView) view.findViewById(R.id.title);
             descriptionView = (TextView) view.findViewById(R.id.description);
+            initClickItem(view, this);
         }
+    }
+
+    private void initClickItem(View view, final GenreDetailAdapter.ViewHolder viewHolder) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                genreDetailService.setSelectDetailGenre(viewHolder);
+            }
+        });
     }
 }

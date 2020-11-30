@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.5.3'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
 }

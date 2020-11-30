@@ -1,4 +1,4 @@
-package com.example.catalogfilms;
+package com.example.catalogfilms.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,6 +12,9 @@ import com.example.catalogfilms.adapters.MovieAdapter;
 import com.example.catalogfilms.models.DetailGenre;
 import com.example.catalogfilms.models.Genre;
 import com.example.catalogfilms.models.Movie;
+import com.example.catalogfilms.services.GenreDetailSingletonService;
+import com.example.catalogfilms.services.GenreSingletonService;
+import com.example.catalogfilms.services.MovieSingletonService;
 import com.example.catalogfilms.utils.IOUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,16 +39,24 @@ import javax.net.ssl.X509TrustManager;
 
 // A task with String input parameter, and returns the result as String.
 // AsyncTask<Params, Progress, Result>
-public class DownloadJsonTask extends AsyncTask<String, Void, String> {
-
+public class BackendAsyncTask extends AsyncTask<String, Void, String> {
     private String objectType;
+    private GenreSingletonService genreService;
+    private GenreDetailSingletonService genreDetailService;
+    private MovieSingletonService movieService;
+
     private Context context;
     private RecyclerView recyclerView;
 
-    public DownloadJsonTask(Context context, RecyclerView recyclerView, String objectType) {
+    public BackendAsyncTask(Context context,
+                            RecyclerView recyclerView,
+                            String objectType) {
         this.context = context;
         this.objectType = objectType;
         this.recyclerView = recyclerView;
+        genreService = GenreSingletonService.getInstance();
+        genreDetailService = GenreDetailSingletonService.getInstance();
+        movieService = MovieSingletonService.getInstance();
     }
 
     @Override
@@ -105,23 +116,28 @@ public class DownloadJsonTask extends AsyncTask<String, Void, String> {
             try {
                 switch (objectType) {
                     case "Genre": {
-                        List<Genre> genreList = mapper.readValue(result, new TypeReference<List<Genre>>(){});
+                        List<Genre> genreList = mapper.readValue(result, new TypeReference<List<Genre>>() {
+                        });
+                        genreService.setGenres(genreList);
                         GenreAdapter adapter = new GenreAdapter(context, genreList);
-                        recyclerView.setAdapter(adapter);
+                        this.recyclerView.setAdapter(adapter);
                         break;
                     }
                     case "DetailGenre": {
-                        List<DetailGenre> detailGenreList = mapper.readValue(result, new TypeReference<List<DetailGenre>>(){});
+                        List<DetailGenre> detailGenreList = mapper.readValue(result, new TypeReference<List<DetailGenre>>() {
+                        });
+                        genreDetailService.setDetailGenreList(detailGenreList);
                         GenreDetailAdapter adapter = new GenreDetailAdapter(context, detailGenreList);
-                        recyclerView.setAdapter(adapter);
+                        this.recyclerView.setAdapter(adapter);
                         break;
                     }
                     case "Movie": {
                         Movie movie = mapper.readValue(result, Movie.class);
                         List<Movie> movies = new ArrayList<>();
                         movies.add(movie);
+                        movieService.setMovies(movies);
                         MovieAdapter adapter = new MovieAdapter(context, movies);
-                        recyclerView.setAdapter(adapter);
+                        this.recyclerView.setAdapter(adapter);
                         break;
                     }
                 }

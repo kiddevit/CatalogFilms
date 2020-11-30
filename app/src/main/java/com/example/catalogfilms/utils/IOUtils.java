@@ -9,7 +9,7 @@ public class IOUtils {
         try {
             in.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -17,7 +17,7 @@ public class IOUtils {
         try {
             reader.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }

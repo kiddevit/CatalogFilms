@@ -13,18 +13,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.catalogfilms.R;
-import com.example.catalogfilms.models.DetailGenre;
 import com.example.catalogfilms.models.Movie;
+import com.example.catalogfilms.services.MovieSingletonService;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<Movie> movies;
+    private MovieSingletonService movieService;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.movies = movies;
         this.inflater = LayoutInflater.from(context);
+        this.movieService = MovieSingletonService.getInstance();
     }
 
     @Override
@@ -67,6 +69,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             genreView = (TextView) view.findViewById(R.id.movie_genre);
             directorView = (TextView) view.findViewById(R.id.movie_director);
             actorsView = (TextView) view.findViewById(R.id.movie_actors);
+            initClickItem(view, this);
         }
+    }
+
+    private void initClickItem(View view, final MovieAdapter.ViewHolder viewHolder) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movieService.setSelectMovie(viewHolder);
+            }
+        });
     }
 }

@@ -10,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.catalogfilms.R;
 import com.example.catalogfilms.models.Genre;
+import com.example.catalogfilms.services.GenreSingletonService;
 
 import java.util.List;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> {
     private LayoutInflater inflater;
     private List<Genre> genreList;
+    private GenreSingletonService genreService;
 
     public GenreAdapter(Context context, List<Genre> genreList) {
         this.genreList = genreList;
         this.inflater = LayoutInflater.from(context);
+        this.genreService = GenreSingletonService.getInstance();
     }
 
     @Override
@@ -47,6 +50,16 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
             super(view);
             nameView = (TextView) view.findViewById(R.id.name);
             amountView = (TextView) view.findViewById(R.id.amount);
+            initClickItem(view, this);
         }
+    }
+
+    private void initClickItem(View view, final ViewHolder viewHolder) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                genreService.setSelectGenre(viewHolder);
+            }
+        });
     }
 }

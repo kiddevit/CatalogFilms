@@ -28,7 +28,7 @@ public class RequestUtils {
             return false;
         }
 
-        Toast.makeText(context, "Network OK", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Network OK", Toast.LENGTH_SHORT).show();
         return true;
     }
 }
