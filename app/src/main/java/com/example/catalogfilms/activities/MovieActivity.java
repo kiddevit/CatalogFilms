@@ -100,7 +100,7 @@ public class MovieActivity extends AppCompatActivity {
         MovieRepository movieRepository = new MovieRepository(this);
         movieRepository.open();
 
-        Movie currentMovie = movieRepository.getMovieById(this.movieId);
+        Movie currentMovie = movieRepository.getMovieById(this.movieId); // todo сравнить по title и сохранять movieId
         if (currentMovie != null) {
             Toast.makeText(this, "Already added to favorites", Toast.LENGTH_SHORT).show();
         } else {

@@ -31,7 +31,7 @@ public class FavouriteMovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite_movie);
-        setTitle("Favourite movies");
+        setTitle("Favorite movies");
 
         initRecycleView();
         initBottomMenu();
