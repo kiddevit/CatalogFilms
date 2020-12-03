@@ -27,6 +27,8 @@
 
         <activity android:name="com.example.catalogfilms.activities.FavouriteMovieActivity"></activity>
 
+        <activity android:name="com.example.catalogfilms.activities.MapActivity"></activity>
+
     </application>
 
 </manifest>

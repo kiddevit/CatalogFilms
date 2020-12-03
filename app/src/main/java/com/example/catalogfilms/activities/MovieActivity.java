@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +16,16 @@ import com.example.catalogfilms.services.MovieSingletonService;
 import com.example.catalogfilms.tasks.BackendAsyncTask;
 import com.example.catalogfilms.R;
 import com.example.catalogfilms.models.Movie;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static com.example.catalogfilms.utils.RequestUtils.checkInternetConnection;
 import static com.example.catalogfilms.utils.UrlUtils.getGenerateUrl;
 
 public class MovieActivity extends AppCompatActivity {
-    private long movieId;
     private RecyclerView recyclerView;
+    private BottomNavigationView bottomNavigationView;
+
+    private long movieId;
     private MovieSingletonService movieService;
 
     @Override
@@ -31,9 +35,11 @@ public class MovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie);
         setTitle("About movie");
 
-        initServices();
         initActionBar();
         initRecycleView();
+        initBottomMenu();
+
+        initServices();
         downloadAndShowMovieById(movieId);
     }
 
@@ -45,6 +51,27 @@ public class MovieActivity extends AppCompatActivity {
 
     private void initServices() {
         movieService = MovieSingletonService.getInstance();
+    }
+
+    private void initBottomMenu() {
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.movie_bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.catalogue:
+                                break;
+                            case R.id.favorite:
+                                toFavoriteMovieActivity();
+                                break;
+                            case R.id.map:
+                                toMapActivity();
+                                break;
+                        }
+                        return false;
+                    }
+                });
     }
 
     private void initActionBar() {
@@ -104,5 +131,15 @@ public class MovieActivity extends AppCompatActivity {
         String jsonUrl = getGenerateUrl(Movie.class.getSimpleName(), id);
         BackendAsyncTask task = new BackendAsyncTask(this, this.recyclerView, Movie.class.getSimpleName());
         task.execute(jsonUrl);
+    }
+
+    private void toFavoriteMovieActivity() {
+        Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        startActivity(intent);
+    }
+
+    private void toMapActivity() {
+        Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
     }
 }

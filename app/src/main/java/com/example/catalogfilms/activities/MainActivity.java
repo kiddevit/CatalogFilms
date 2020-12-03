@@ -1,5 +1,6 @@
 package com.example.catalogfilms.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.catalogfilms.services.GenreSingletonService;
 import com.example.catalogfilms.tasks.BackendAsyncTask;
 import com.example.catalogfilms.R;
 import com.example.catalogfilms.models.Genre;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -22,6 +25,7 @@ import static com.example.catalogfilms.utils.UrlUtils.getGenerateUrl;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+    private BottomNavigationView bottomNavigationView;
     private GenreSingletonService genreService;
     private Context context = this;
 
@@ -31,14 +35,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Genres");
 
-        initServices();
         initRecycleView();
+        initBottomMenu();
+
+        initServices();
         downloadAndShowGenreList();
         recycleViewSelectItemSubscriber();
     }
 
     private void initServices() {
         genreService = GenreSingletonService.getInstance();
+    }
+
+    private void initBottomMenu() {
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.genre_bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.catalogue:
+                                break;
+                            case R.id.favorite:
+                                toFavoriteMovieActivity();
+                                break;
+                            case R.id.map:
+                                toMapActivity();
+                                break;
+                        }
+                        return false;
+                    }
+                });
     }
 
     private void initRecycleView() {
@@ -85,6 +112,16 @@ public class MainActivity extends AppCompatActivity {
     private void toGenreDetailActivity(long genreId) {
         Intent intent = new Intent(this, GenreDetailActivity.class);
         intent.putExtra("genreId", genreId);
+        startActivity(intent);
+    }
+
+    private void toFavoriteMovieActivity() {
+        Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        startActivity(intent);
+    }
+
+    private void toMapActivity() {
+        Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
 }
