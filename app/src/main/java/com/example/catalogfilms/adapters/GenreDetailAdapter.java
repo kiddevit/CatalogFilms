@@ -1,7 +1,6 @@
 package com.example.catalogfilms.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import com.example.catalogfilms.models.DetailGenre;
 import com.example.catalogfilms.services.GenreDetailSingletonService;
 
 import java.util.List;
+
+import static com.example.catalogfilms.utils.ColorUtils.mapColorByRating;
 
 public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.ViewHolder> {
     private LayoutInflater inflater;
@@ -39,18 +40,6 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
         holder.ratingView.setTextColor(mapColorByRating(detailGenre.getRating()));
         holder.titleView.setText(detailGenre.getTitle());
         holder.descriptionView.setText(detailGenre.getDescription());
-    }
-
-    private int mapColorByRating(double rating) {
-        if (rating > 8) {
-            return Color.parseColor("#BF8230");
-        }
-
-        if (rating > 7) {
-            return Color.parseColor("#FFC600");
-        }
-
-        return Color.parseColor("#FF1300");
     }
 
     @Override

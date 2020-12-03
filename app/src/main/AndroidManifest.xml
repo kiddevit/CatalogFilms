@@ -24,6 +24,9 @@
         <activity android:name="com.example.catalogfilms.activities.GenreDetailActivity"></activity>
 
         <activity android:name="com.example.catalogfilms.activities.MovieActivity"></activity>
+
+        <activity android:name="com.example.catalogfilms.activities.FavouriteMovieActivity"></activity>
+
     </application>
 
 </manifest>

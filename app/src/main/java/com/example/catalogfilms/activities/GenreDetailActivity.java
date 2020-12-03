@@ -2,7 +2,9 @@ package com.example.catalogfilms.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,6 @@ import static com.example.catalogfilms.utils.UrlUtils.getGenerateUrl;
 
 public class GenreDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private String activityTitle;
     private long genreId;
     private GenreDetailSingletonService genreDetailService;
 
@@ -29,8 +30,9 @@ public class GenreDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initParameters();
         setContentView(R.layout.activity_genre_detail);
-        setTitle(activityTitle);
+        setTitle("Movies");
 
+        initActionBar();
         initServices();
         initRecycleView();
         downloadAndShowGenreDetailListById(genreId);
@@ -41,8 +43,24 @@ public class GenreDetailActivity extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
             genreId = arguments.getLong("genreId");
-            activityTitle = arguments.getString("genreName");
         }
+    }
+
+    private void initActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initServices() {
@@ -77,7 +95,7 @@ public class GenreDetailActivity extends AppCompatActivity {
 
             @Override
             public void onNext(DetailGenre detailGenre) {
-                toMovieActivity(detailGenre.getId(), detailGenre.getTitle());
+                toMovieActivity(detailGenre.getId());
             }
 
             @Override
@@ -91,11 +109,9 @@ public class GenreDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void toMovieActivity(long movieId, String movieName) {
+    private void toMovieActivity(long movieId) {
         Intent intent = new Intent(this, MovieActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("movieId", movieId);
-        intent.putExtra("movieName", movieName);
         startActivity(intent);
     }
 }

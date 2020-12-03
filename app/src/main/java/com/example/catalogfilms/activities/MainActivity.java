@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, "List is empty", Toast.LENGTH_LONG).show();
                     return;
                 }
-                toGenreDetailActivity(genre.getId(), genre.getName());
+                toGenreDetailActivity(genre.getId());
             }
 
             @Override
@@ -82,11 +82,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void toGenreDetailActivity(long genreId, String genreName) {
+    private void toGenreDetailActivity(long genreId) {
         Intent intent = new Intent(this, GenreDetailActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("genreId", genreId);
-        intent.putExtra("genreName", genreName);
         startActivity(intent);
     }
 }
