@@ -60,19 +60,7 @@ public class MovieRepository {
         Cursor cursor = getAllEntries();
         if (cursor.moveToFirst()) {
             do {
-                movies.add(Movie.builder()
-                        .id(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ID)))
-                        .title(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_TITLE)))
-                        .description(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DESCRIPTION)))
-                        .director(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DIRECTOR)))
-                        .actors(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ACTORS)))
-                        .rating(cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_RATING)))
-                        .year(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_YEAR)))
-                        .genreId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE_ID)))
-                        .genre(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE)))
-                        .poster(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_POSTER)))
-                        .build()
-                );
+                movies.add(getMovieByCursor(cursor));
             }
             while (cursor.moveToNext());
         }
@@ -90,22 +78,38 @@ public class MovieRepository {
         String query = String.format("SELECT * FROM %s WHERE %s=?", DatabaseHelper.MOVIE_TABLE, DatabaseHelper.MOVIE_COLUMN_ID);
         Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(id)});
         if (cursor.moveToFirst()) {
-            movie = Movie.builder()
-                    .id(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ID)))
-                    .title(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_TITLE)))
-                    .description(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DESCRIPTION)))
-                    .director(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DIRECTOR)))
-                    .actors(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ACTORS)))
-                    .rating(cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_RATING)))
-                    .year(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_YEAR)))
-                    .genreId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE_ID)))
-                    .genre(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE)))
-                    .poster(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_POSTER)))
-                    .build();
+            movie = getMovieByCursor(cursor);
         }
         cursor.close();
 
         return movie;
+    }
+
+    public Movie getMovieByTitle(String title) {
+        Movie movie = null;
+        String query = String.format("SELECT * FROM %s WHERE %s=?", DatabaseHelper.MOVIE_TABLE, DatabaseHelper.MOVIE_COLUMN_TITLE);
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(title)});
+        if (cursor.moveToFirst()) {
+            movie = getMovieByCursor(cursor);
+        }
+        cursor.close();
+
+        return movie;
+    }
+
+    private Movie getMovieByCursor(Cursor cursor) {
+        return Movie.builder()
+                .id(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ID)))
+                .title(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_TITLE)))
+                .description(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DESCRIPTION)))
+                .director(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_DIRECTOR)))
+                .actors(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_ACTORS)))
+                .rating(cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_RATING)))
+                .year(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_YEAR)))
+                .genreId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE_ID)))
+                .genre(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_GENRE)))
+                .poster(cursor.getString(cursor.getColumnIndex(DatabaseHelper.MOVIE_COLUMN_POSTER)))
+                .build();
     }
 
     public long add(Movie movie) {
@@ -127,6 +131,7 @@ public class MovieRepository {
 
     private ContentValues getMovieContentValues(Movie movie) {
         ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.MOVIE_COLUMN_ID, movie.getId());
         cv.put(DatabaseHelper.MOVIE_COLUMN_TITLE, movie.getTitle());
         cv.put(DatabaseHelper.MOVIE_COLUMN_DESCRIPTION, movie.getDescription());
         cv.put(DatabaseHelper.MOVIE_COLUMN_DIRECTOR, movie.getDirector());

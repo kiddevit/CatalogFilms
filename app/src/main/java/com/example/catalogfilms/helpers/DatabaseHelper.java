@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String getSqlCreateMovieTable() {
         return "CREATE TABLE " + MOVIE_TABLE + " (" +
-                MOVIE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MOVIE_COLUMN_ID + " INTEGER," +
                 MOVIE_COLUMN_TITLE + " TEXT, " +
                 MOVIE_COLUMN_DESCRIPTION + " TEXT, " +
                 MOVIE_COLUMN_DIRECTOR + " TEXT, " +

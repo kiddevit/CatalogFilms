@@ -100,11 +100,11 @@ public class MovieActivity extends AppCompatActivity {
         MovieRepository movieRepository = new MovieRepository(this);
         movieRepository.open();
 
-        Movie currentMovie = movieRepository.getMovieById(this.movieId); // todo сравнить по title и сохранять movieId
-        if (currentMovie != null) {
+        Movie currentMovie = movieService.getMovies().get(0);
+        if (movieRepository.getMovieByTitle(currentMovie.getTitle()) != null) {
             Toast.makeText(this, "Already added to favorites", Toast.LENGTH_SHORT).show();
         } else {
-            if (movieRepository.add(movieService.getMovies().get(0)) != -1) {
+            if (movieRepository.add(currentMovie) != -1) {
                 Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
             }
         }
