@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Каталог фильмов</string>
+    <string name="app_activity_genre">Жанры</string>
+    <string name="app_activity_genre_detail">Фильмы</string>
+    <string name="app_activity_movie">О видео</string>
+    <string name="app_activity_favorites">Избранные фильмы</string>
+    <string name="app_activity_map">Карта</string>
+
+    <string name="bottom_menu_catalogue">Каталог</string>
+    <string name="bottom_menu_favorites">Избранное</string>
+    <string name="bottom_menu_map">Карта</string>
+
+    <string name="empty_list">Список пуст</string>
+    <string name="added_to_favorites">Добавлено в избранное</string>
+    <string name="already_added_to_favorites">Уже добавлено</string>
+
+    <string name="no_default_network">Отстутствует стандартая активная сеть</string>
+    <string name="not_connected_network">Сеть не подключена</string>
+    <string name="not_available_network">Сеть не доступна</string>
+    <string name="ok_network">Сеть ОК</string>
+</resources>

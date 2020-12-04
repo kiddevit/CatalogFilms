@@ -66,6 +66,7 @@ public class MovieActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.catalogue:
+                                toGenreActivity();
                                 break;
                             case R.id.favorite:
                                 toFavoriteMovieActivity();
@@ -145,6 +146,11 @@ public class MovieActivity extends AppCompatActivity {
 
     private void toMapActivity() {
         Intent intent = new Intent(this, MapActivity.class);
+        startActivity(intent);
+    }
+
+    private void toGenreActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
