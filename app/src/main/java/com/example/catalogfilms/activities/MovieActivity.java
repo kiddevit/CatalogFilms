@@ -33,11 +33,12 @@ public class MovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initParameters();
         setContentView(R.layout.activity_movie);
-        setTitle("About movie");
+        setTitle(R.string.app_activity_movie);
 
         initActionBar();
         initRecycleView();
         initBottomMenu();
+        subscribeOnBottomNavigationView();
 
         initServices();
         downloadAndShowMovieById(movieId);
@@ -55,6 +56,10 @@ public class MovieActivity extends AppCompatActivity {
 
     private void initBottomMenu() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.movie_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.catalogue);
+    }
+
+    private void subscribeOnBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -102,10 +107,10 @@ public class MovieActivity extends AppCompatActivity {
 
         Movie currentMovie = movieService.getMovies().get(0);
         if (movieRepository.getMovieByTitle(currentMovie.getTitle()) != null) {
-            Toast.makeText(this, "Already added to favorites", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.already_added_to_favorites, Toast.LENGTH_SHORT).show();
         } else {
             if (movieRepository.add(currentMovie) != -1) {
-                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.added_to_favorites, Toast.LENGTH_SHORT).show();
             }
         }
 

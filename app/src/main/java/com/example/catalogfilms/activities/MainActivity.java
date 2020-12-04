@@ -33,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Genres");
+        setTitle(R.string.app_activity_genre);
 
         initRecycleView();
         initBottomMenu();
+        subscribeOnBottomNavigationView();
 
         initServices();
         downloadAndShowGenreList();
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBottomMenu() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.genre_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.catalogue);
+    }
+
+    private void subscribeOnBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNext(Genre genre) {
                 if (genre.getAmount() < 1) {
-                    Toast.makeText(context, "List is empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.empty_list, Toast.LENGTH_LONG).show();
                     return;
                 }
                 toGenreDetailActivity(genre.getId());

@@ -17,13 +17,18 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        setTitle("Map");
+        setTitle(R.string.app_activity_map);
 
         initBottomMenu();
+        subscribeOnBottomNavigationView();
     }
 
     private void initBottomMenu() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.map_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.map);
+    }
+
+    private void subscribeOnBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

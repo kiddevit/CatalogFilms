@@ -34,11 +34,12 @@ public class GenreDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initParameters();
         setContentView(R.layout.activity_genre_detail);
-        setTitle("Movies");
+        setTitle(R.string.app_activity_genre_detail);
 
         initActionBar();
         initRecycleView();
         initBottomMenu();
+        subscribeOnBottomNavigationView();
 
         initServices();
         downloadAndShowGenreDetailListById(genreId);
@@ -59,7 +60,7 @@ public class GenreDetailActivity extends AppCompatActivity {
         }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -75,6 +76,10 @@ public class GenreDetailActivity extends AppCompatActivity {
 
     private void initBottomMenu() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.genre_detail_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.catalogue);
+    }
+
+    private void subscribeOnBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

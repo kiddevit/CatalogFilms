@@ -31,10 +31,11 @@ public class FavouriteMovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite_movie);
-        setTitle("Favorite movies");
+        setTitle(R.string.app_activity_favorites);
 
         initRecycleView();
         initBottomMenu();
+        subscribeOnBottomNavigationView();
 
         initServices();
         loadDataFromDB();
@@ -48,6 +49,10 @@ public class FavouriteMovieActivity extends AppCompatActivity {
 
     private void initBottomMenu() {
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.favorite_movies_bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.favorite);
+    }
+
+    private void subscribeOnBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override

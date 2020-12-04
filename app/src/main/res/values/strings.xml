@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Catalog Films</string>
+    <string name="app_activity_genre">Genres</string>
+    <string name="app_activity_genre_detail">Movies</string>
+    <string name="app_activity_movie">About movie</string>
+    <string name="app_activity_favorites">Favorite movies</string>
+    <string name="app_activity_map">Map</string>
+
+    <string name="bottom_menu_catalogue">Catalogue</string>
+    <string name="bottom_menu_favorites">Favorites</string>
+    <string name="bottom_menu_map">Map</string>
+
+    <string name="empty_list">List is empty</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="already_added_to_favorites">Already added to favorites</string>
+
+    <string name="no_default_network">No default network is currently active</string>
+    <string name="not_connected_network">Network is not connected</string>
+    <string name="not_available_network">Network not available</string>
+    <string name="ok_network">Network OK</string>
 </resources>

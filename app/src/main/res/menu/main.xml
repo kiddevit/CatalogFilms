@@ -5,8 +5,9 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/favorite"
-        android:icon="@android:drawable/btn_star"
-        android:title="favorite"
+        android:icon="@drawable/add_favorite_movie"
+        app:iconTint="@android:color/white"
+        android:title=""
         app:showAsAction="ifRoom"/>
 
 </menu>
