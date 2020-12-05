@@ -17,6 +17,7 @@ import com.example.catalogfilms.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -39,6 +40,7 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Configuration.getInstance().setUserAgentValue(this.getPackageName()); // for map
         setContentView(R.layout.activity_map);
         setTitle(R.string.app_activity_map);
 
