@@ -141,16 +141,19 @@ public class MovieActivity extends AppCompatActivity {
 
     private void toFavoriteMovieActivity() {
         Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toMapActivity() {
         Intent intent = new Intent(this, MapActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toGenreActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

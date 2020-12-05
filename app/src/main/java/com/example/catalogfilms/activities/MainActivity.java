@@ -116,17 +116,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void toGenreDetailActivity(long genreId) {
         Intent intent = new Intent(this, GenreDetailActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("genreId", genreId);
         startActivity(intent);
     }
 
     private void toFavoriteMovieActivity() {
         Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toMapActivity() {
         Intent intent = new Intent(this, MapActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

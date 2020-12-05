@@ -144,22 +144,26 @@ public class GenreDetailActivity extends AppCompatActivity {
 
     private void toMovieActivity(long movieId) {
         Intent intent = new Intent(this, MovieActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("movieId", movieId);
         startActivity(intent);
     }
 
     private void toFavoriteMovieActivity() {
         Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toMapActivity() {
         Intent intent = new Intent(this, MapActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toGenreActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

@@ -179,11 +179,13 @@ public class MapActivity extends AppCompatActivity {
 
     private void toFavoriteMovieActivity() {
         Intent intent = new Intent(this, FavouriteMovieActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void toCatalogActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
