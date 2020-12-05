@@ -7,16 +7,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="678dp"
-        android:layout_above="@+id/map_bottom_navigation"
+        android:layout_height="600dp"
+        android:layout_above="@+id/relative_tracking"
         android:layout_marginBottom="-3dp"
         android:orientation="vertical">
 
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="605dp" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_tracking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/map_bottom_navigation"
+        android:layout_marginBottom="-3dp"
+        android:padding="10dp">
+
+        <Switch
+            android:id="@+id/switch_tracking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:theme="@style/SwitchLocation"
+            android:text="@string/tracking" />
+
+    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/map_bottom_navigation"

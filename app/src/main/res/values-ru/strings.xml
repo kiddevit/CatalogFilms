@@ -13,6 +13,7 @@
     <string name="empty_list">Список пуст</string>
     <string name="added_to_favorites">Добавлено в избранное</string>
     <string name="already_added_to_favorites">Уже добавлено</string>
+    <string name="tracking">ОТСЛЕЖИВАНИЕ МЕСТОПОЛОЖЕНИЯ</string>
 
     <string name="no_default_network">Отстутствует стандартая активная сеть</string>
     <string name="not_connected_network">Сеть не подключена</string>

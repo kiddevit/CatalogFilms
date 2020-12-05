@@ -13,6 +13,7 @@
     <string name="empty_list">List is empty</string>
     <string name="added_to_favorites">Added to favorites</string>
     <string name="already_added_to_favorites">Already added to favorites</string>
+    <string name="tracking">TRACKING</string>
 
     <string name="no_default_network">No default network is currently active</string>
     <string name="not_connected_network">Network is not connected</string>

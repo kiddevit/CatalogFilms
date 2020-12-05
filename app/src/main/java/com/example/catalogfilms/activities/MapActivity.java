@@ -1,12 +1,12 @@
 package com.example.catalogfilms.activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +17,11 @@ import com.example.catalogfilms.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 
@@ -28,20 +29,24 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MapActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
+    private Switch switchTracking;
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    MyLocationNewOverlay myLocationNewOverlay = null;
     private MapView map = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_map);
         setTitle(R.string.app_activity_map);
 
         initMap();
         toDefaultCentre();
+
+        initSwitchTracking();
+        subscribeOnSwitchTracking();
 
         initBottomMenu();
         subscribeOnBottomNavigationView();
@@ -79,11 +84,50 @@ public class MapActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
 
+        initLocationOverlay();
+        addLocationOverlay();
+
         requestPermissionsIfNecessary(new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 WRITE_EXTERNAL_STORAGE,
                 WRITE_EXTERNAL_STORAGE
         });
+    }
+
+    private void initLocationOverlay() {
+        GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(this.getBaseContext());
+        gpsMyLocationProvider.setLocationUpdateMinDistance(100); // [m]  // Set the minimum distance for location updates
+        gpsMyLocationProvider.setLocationUpdateMinTime(10000);   // [ms] // Set the minimum time interval for location updates
+        MyLocationNewOverlay mMyLocationOverlay = new MyLocationNewOverlay(gpsMyLocationProvider, map);
+        mMyLocationOverlay.setDrawAccuracyEnabled(true);
+        this.myLocationNewOverlay = mMyLocationOverlay;
+    }
+
+    private void initSwitchTracking() {
+        switchTracking = (Switch) findViewById(R.id.switch_tracking);
+        switchTracking.setChecked(true);
+    }
+
+    public void subscribeOnSwitchTracking() {
+        switchTracking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    addLocationOverlay();
+                } else {
+                    removeLocationOverlay();
+                }
+            }
+        });
+    }
+
+    public void addLocationOverlay() {
+        if (!map.getOverlays().contains(myLocationNewOverlay)) {
+            map.getOverlays().add(myLocationNewOverlay);
+        }
+    }
+
+    public void removeLocationOverlay() {
+        map.getOverlays().remove(myLocationNewOverlay);
     }
 
     private void toDefaultCentre() {
