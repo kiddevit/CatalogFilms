@@ -86,7 +86,7 @@ public class FavouriteMovieActivity extends AppCompatActivity {
         FavouriteMovieAdapter adapter = new FavouriteMovieAdapter(this, favouriteMovies);
         this.recyclerView.setAdapter(adapter);
 
-        movieRepository.close();
+        movieRepository.close(); // clear resources
     }
 
     private void recycleViewSelectItemSubscriber() {
