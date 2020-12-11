@@ -6,7 +6,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -16,6 +20,9 @@ import lombok.Data;
         "movies"
 })
 @Data
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Genre {
     @JsonProperty("id")
     private Long id;

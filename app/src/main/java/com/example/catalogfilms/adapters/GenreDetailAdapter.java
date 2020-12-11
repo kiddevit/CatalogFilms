@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.catalogfilms.R;
@@ -27,8 +28,9 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
         this.genreDetailService = GenreDetailSingletonService.getInstance();
     }
 
+    @NonNull
     @Override
-    public GenreDetailAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GenreDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.genre_detail_item, parent, false);
         return new GenreDetailAdapter.ViewHolder(view);
     }
@@ -45,6 +47,10 @@ public class GenreDetailAdapter extends RecyclerView.Adapter<GenreDetailAdapter.
     @Override
     public int getItemCount() {
         return detailGenreList.size();
+    }
+
+    public List<DetailGenre> getDetailGenreList() {
+        return detailGenreList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
