@@ -44,7 +44,7 @@ public class FavouriteMovieActivity extends AppCompatActivity {
 
 
     private void initServices() {
-        favouriteMovieService = FavouriteMovieSingletonService.getInstance();
+        favouriteMovieService = FavouriteMovieSingletonService.getInstance(); //
     }
 
     private void initBottomMenu() {
