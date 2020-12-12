@@ -27,7 +27,7 @@ public class MovieRepository {
     }
 
     public void close() {
-        dbHelper.close();
+        dbHelper.close(); // clear resources
     }
 
     private Cursor getAllEntries() {
